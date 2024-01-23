@@ -78,6 +78,10 @@ public class Travel implements Problem<String,String> {
         }
     }
 
+    public int getEstimateDistances(String s){
+        return estimatedDistances.get(s);
+    }
+
     public List<Tuple<String,String>> execution (String city){
         return transitionModel.get(city);
     }
