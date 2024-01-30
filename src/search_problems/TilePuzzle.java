@@ -27,44 +27,35 @@ public class TilePuzzle implements Problem<String,String> {
         buildTransitionModel();
         buildEstimatedDistances();
     }
-    private final Map<String, List<Tuple<String, String>>> transitionModel = new HashMap<>();
+    private final Map<String, List<Tuple<PuzzleState, String>>> transitionModel = new HashMap<>();
     private final Map<String, Integer> estimatedDistances = new HashMap<>();
 
-    public String initialState(){
-        return INITIAL_STATE;
+    public PuzzleState initial3x3State(){
+        return INITIAL_3x3_STATE;
     }
-    public String goalState(){
-        return GOAL_STATE;
+    public PuzzleState goal3x3State(){
+        return GOAL_3x3_STATE;
     }
-    private void buildTransitionModel(){
-        try(Scanner sc = new Scanner(new File(MAP_FILE))){
-            while(sc.hasNext()) {
-                String[] a = sc.nextLine().split(":");
-                String cityA = a[0];
-                String cityB = a[1];
-                int cost = Integer.parseInt(a[2]);
-                if (transitionModel.containsKey(cityA)) {
-                    List<Tuple<String, String>> l = transitionModel.get(cityA);
-                    l.add(new Tuple<>(cityB, "to" + cityB, cost));
-                    transitionModel.replace(cityA, l);
-                } else {
-                    List<Tuple<String, String>> l = new ArrayList<>();
-                    l.add(new Tuple<>(cityB, "to" + cityB, cost));
-                    transitionModel.put(cityA, l);
-                }
-                if (transitionModel.containsKey(cityB)) {
-                    List<Tuple<String, String>> l = transitionModel.get(cityB);
-                    l.add(new Tuple<>(cityA, "to" + cityA, cost));
-                    transitionModel.replace(cityB, l);
-                } else {
-                    List<Tuple<String, String>> l = new ArrayList<>();
-                    l.add(new Tuple<>(cityA, "to" + cityA, cost));
-                    transitionModel.put(cityB, l);
-                }
-            }
+    public PuzzleState initial4x4State(){
+        return INITIAL_4x4_STATE;
+    }
+    public PuzzleState goal4x4State(){
+        return GOAL_4x4_STATE;
+    }
+
+    public List<Tuple<PuzzleState,String>> execution (PuzzleState state){
+        return transitionModel.get(state);
+    }
+
+    private void buildTransitionModel(state){
+        try{
+            PuzzleState stateRight = move_right(state);
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void move_right() {
     }
 
     private void buildEstimatedDistances(){
@@ -78,10 +69,6 @@ public class TilePuzzle implements Problem<String,String> {
         }catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public List<Tuple<String,String>> execution (String city){
-        return transitionModel.get(city);
     }
 
     //for testing only
