@@ -68,7 +68,7 @@ public class SlidingTile implements Problem<ArrayList<Integer>, String> {
         }
         // right
         if (column_number != SIZE-1){
-            int target_position = zero_position-1;
+            int target_position = zero_position+1;
             int target = state.get(target_position);
             ArrayList<Integer> copy = (ArrayList<Integer>) state.clone();
             copy.set(target_position, 0);
