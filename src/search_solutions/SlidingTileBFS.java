@@ -6,7 +6,7 @@ import search_problems.SlidingTile;
 
 import java.util.ArrayList;
 
-public class SlidingTileBFS extends BaseSearch<ArrayList<Integer>, ArrayList<Integer>> {
+public class SlidingTileBFS extends BaseSearch<ArrayList<Integer>, String> {
     public SlidingTileBFS(ArrayList<Integer> data) {
         super((new SlidingTile(data)), new FIFOQueue<>());
     }
