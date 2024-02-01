@@ -90,4 +90,20 @@ public class SlidingTile implements Problem<ArrayList<Integer>, String> {
         }
     }
 
+    public int misplacedTiles(ArrayList<Integer> state){
+        int count = 0;
+        for (int tile: state){
+            if (tile == 0){
+                continue;
+            } else {
+                if (tile != goal_state.get(state.indexOf(tile))){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+
+
 }
