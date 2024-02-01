@@ -1,13 +1,12 @@
 package search_problems;
 
-import core_search.Problem;
-import core_search.Tuple;
+import core_search.*;
 
 import java.util.*;
 
 public class SlidingTile implements Problem<ArrayList<Integer>, String> {
 
-    //empty cell is zerp
+    //empty cell is zero
     private final ArrayList<Integer> initial;
     private final ArrayList<Integer> goal_state;
 
@@ -19,7 +18,7 @@ public class SlidingTile implements Problem<ArrayList<Integer>, String> {
         if (data.size() == 9){
             this.goal_state = new ArrayList<Integer>(Arrays.asList(0,1,2, 3,4,5, 6,7,8));
         }
-        else{ // dependancy alert assumed 4x4
+        else{ // dependency alert assumed 4x4
             this.goal_state = new ArrayList<Integer>(Arrays.asList(1,2,3,4, 5,6,7,8, 9,10,11,12, 13,14,15,0));
         }
         SIZE = (int) Math.sqrt(data.size());
@@ -77,4 +76,18 @@ public class SlidingTile implements Problem<ArrayList<Integer>, String> {
         }
         return result;
     }
+
+    public void printState(ArrayList<Integer> state){
+        for (int tile: state){
+            if (tile != 0){
+                System.out.printf("%3s", tile+"");
+            } else {
+                System.out.print("   ");
+            }
+            if (state.indexOf(tile) % SIZE == SIZE -1){
+                System.out.println();
+            }
+        }
+    }
+
 }

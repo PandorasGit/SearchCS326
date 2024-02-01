@@ -3,18 +3,26 @@ package core_search;
 import java.util.*;
 
 /**
+ *  WARNING:
+ *     1. This class will NOT work if S (date type of state) is an array type (e.g., int[], String[], etc.)
+ *     2. The data type of state must provide the correct equals method
+ *
  *  An implementation of the general search algorithm
  *  (AIMA 4e, page 73, Figure 3.7 with some modifications)
+ *
  *  To implement a specific search algorithm (such as BFS, DFS, etc.),
  *  extend this class and provide an implementation of the PriorityQueue
+ *
+ *  S represents the date type of state
+ *  A represents the date type of action
  *  */
 
 public class BaseSearch<S,A> {
     private final Problem<S,A> p;
-    private final PriorityQueue<S,A> frontier;
+    private final MyPriorityQueue<S,A> frontier;
     private final Set<S> expanded = new HashSet<>();
 
-    public BaseSearch(Problem<S, A> p, PriorityQueue<S, A> frontier) {
+    public BaseSearch(Problem<S, A> p, MyPriorityQueue<S, A> frontier) {
         this.p = p;
         this.frontier = frontier;
     }
@@ -25,17 +33,23 @@ public class BaseSearch<S,A> {
         while(!frontier.isEmpty()){
             Node<S,A> node = frontier.pop();
             if (!expanded.contains(node.getState())){
-                System.out.println(node.getState()+" expanded");
+               // System.out.println(node.getState()+" expanded");
                 if(node.getState().equals(p.goalState())){
-                    System.out.println("\nPath cost: "+node.getPathCost());
+                    int pathCost = node.getPathCost();
                     Stack<S> path = new Stack<>();
                     do {
                         path.add(node.getState());
                         node = node.getParent();
                     } while(node!=null);
-                    Collections.reverse(path);
-                    System.out.println("Path: ");
-                    System.out.println(path);
+
+                    System.out.println("Path (from initial state to goal state): ");
+                    while(!path.isEmpty()){
+                        p.printState(path.pop());
+                        if(!path.isEmpty()) {
+                            System.out.println("↓");
+                        }
+                    }
+                    System.out.println("\nPath cost: "+pathCost);
                     return true;
                 }
                 expanded.add(node.getState());

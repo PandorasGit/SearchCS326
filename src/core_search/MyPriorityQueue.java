@@ -5,7 +5,7 @@ package core_search;
  * @param <S>
  * @param <A>
  */
-public interface PriorityQueue<S,A> {
+public interface MyPriorityQueue<S,A> {
     Node<S,A> pop();
 
     void add(Node<S,A> e);

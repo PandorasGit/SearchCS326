@@ -105,5 +105,7 @@ public class Travel implements Problem<String,String> {
     public int getEstimateDistances(String s) {
         return estimatedDistances.get(s);
     }
-
+    public void printState(String state){
+        System.out.println("state");
+    }
 }
