@@ -4,6 +4,8 @@ import core_search.*;
 
 import java.util.*;
 
+import static java.lang.Math.abs;
+
 public class SlidingTile implements Problem<ArrayList<Integer>, String> {
 
     //empty cell is zero
@@ -34,9 +36,9 @@ public class SlidingTile implements Problem<ArrayList<Integer>, String> {
 
     public List<Tuple<ArrayList<Integer>, String>> execution(ArrayList<Integer> state) {
         List<Tuple<ArrayList<Integer>, String>> result = new ArrayList<Tuple<ArrayList<Integer>, String>>();
-        int zero_position = state.indexOf(0);
-        int row_number = zero_position/SIZE;
-        int column_number = zero_position % SIZE;
+        int zero_position = getZeroPosition(state);
+        int row_number = getRowNumber(zero_position);
+        int column_number = getColumnNumber(zero_position);
 
         // up
         if (row_number != 0){
@@ -63,7 +65,7 @@ public class SlidingTile implements Problem<ArrayList<Integer>, String> {
             ArrayList<Integer> copy = (ArrayList<Integer>) state.clone();
             copy.set(target_position, 0);
             copy.set(zero_position, target);
-            result.add(new Tuple<ArrayList<Integer>, String>(copy, "right", 1));
+            result.add(new Tuple<ArrayList<Integer>, String>(copy, "left", 1));
         }
         // right
         if (column_number != SIZE-1){
@@ -77,6 +79,22 @@ public class SlidingTile implements Problem<ArrayList<Integer>, String> {
         return result;
     }
 
+    private static int getZeroPosition(ArrayList<Integer> state) {
+        return state.indexOf(0);
+    }
+
+    private int getTileGoalPosition(int tile) {
+        return goal_state.indexOf(tile);
+    }
+
+    private int getColumnNumber(int tile) {
+        return tile % SIZE;
+    }
+
+    private int getRowNumber(int tile) {
+        return tile /SIZE;
+    }
+
     public void printState(ArrayList<Integer> state){
         for (int tile: state){
             if (tile != 0){
@@ -84,7 +102,7 @@ public class SlidingTile implements Problem<ArrayList<Integer>, String> {
             } else {
                 System.out.print("   ");
             }
-            if (state.indexOf(tile) % SIZE == SIZE -1){
+            if (getColumnNumber(state.indexOf(tile)) == SIZE -1){
                 System.out.println();
             }
         }
@@ -104,6 +122,16 @@ public class SlidingTile implements Problem<ArrayList<Integer>, String> {
         return count;
     }
 
+    public int distanceToGoal(ArrayList<Integer> state){
+        int totalDistance = 0;
+        for (int tile: state){
+            int goal_position = getTileGoalPosition(tile);
+            int current_position = state.indexOf(tile);
+            totalDistance += abs(getRowNumber(current_position) - getRowNumber(goal_position));
+            totalDistance += abs(getColumnNumber(current_position) - getColumnNumber(goal_position));
+        }
+        return totalDistance;
+    }
 
 
 }

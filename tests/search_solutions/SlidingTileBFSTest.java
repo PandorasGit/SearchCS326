@@ -18,7 +18,7 @@ public class SlidingTileBFSTest {
         SlidingTileBFS slidingTileBFS = new SlidingTileBFS(dataSet);
         assertEquals(true, slidingTileBFS.search());
     }
-
+    // warning takes a lot of time
     @Test
     void test_case_two(){
         ArrayList<Integer> dataSet = new ArrayList<Integer>(Arrays.asList(12,1,2,15,11,6,5,8,7,10,9,4,0,13,14,3));
